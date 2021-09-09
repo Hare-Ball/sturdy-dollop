@@ -4,14 +4,13 @@ const db = require('../models')
 //add more here
 
 router.get("/api/workouts", (req , res) => {
-    console.log("message")
+    //console.log("message")
     db.Workout.aggregate([
         {
             $addFields: {
                 totalDuration: {
                     $sum: "$exercises.duration"
                 }
-
             }
         }
     ])
@@ -24,5 +23,18 @@ router.get("/api/workouts", (req , res) => {
     
 });
 
+router.post ("/api/workouts", ({body}, res) => {
+    db.Workout.create(body)
+    .then (data => {
+        res.json(data);
+    })
+    .catch (error => {
+        res.json(error)
+    })
+    
+});
+
 
 module.exports = router;
+
+// Range
