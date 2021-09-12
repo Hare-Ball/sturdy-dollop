@@ -18,7 +18,8 @@ app.use(htmlRoutes);
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
     userNewUrlParser: true,
-    useFindAndModify: false,
+    useUnifiedTopology: true,
+    useCreateIndex: true
 });
 
 app.listen(PORT, () => {

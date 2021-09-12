@@ -34,7 +34,30 @@ router.post ("/api/workouts", ({body}, res) => {
     
 });
 
+router.put("api/workouts", ({body}, res) => {
+    db.Workout.findOneAndUpdate(body)
+    .then(data => {
+        res.json(data);
+    })
+    .catch (error => {
+        res.json(error)
+    })
+});
+
+// Range
+
+router.get("api/workouts/range", ({body}, res) => {
+    db.Workout.find()
+    .sort({_id: -1})
+    .limit(7)
+    .then(data => {
+        res.json(data);
+    })
+    .catch (error => {
+        res.json(error)
+    })
+});
+
 
 module.exports = router;
 
-// Range
