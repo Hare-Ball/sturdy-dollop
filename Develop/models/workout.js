@@ -35,7 +35,7 @@ const workoutSchema = new Schema({
 
     }]
 
-    //need more here
+    //need more here?
     
 })
 
