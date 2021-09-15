@@ -34,9 +34,9 @@ router.post ("/api/workouts", ({body}, res) => {
     
 });
 
-router.put("api/workouts/:id", (req, res) => {
-    db.Workout.findByIdAndUpdate(
-        { _id: req.params.id },
+router.put("/api/workouts/:id", (req, res) => {
+    db.Workout.findOneAndUpdate(
+        {_id: req.params.id },
         { $push: { exercises: req.body }},
         { new: true })
         .then (data => {
@@ -49,8 +49,16 @@ router.put("api/workouts/:id", (req, res) => {
 
 // Range
 
-router.get("api/workouts/range", (req, res) => {
-    db.Workout.find()
+router.get("/api/workouts/range", (req, res) => {
+    db.Workout.aggregate([
+        {
+            $addFields: {
+                totalDuration: {
+                    $sum: "$exercises.duration"
+                }
+            }
+        }
+    ])
     .sort({_id: -1})
     .limit(7)
     .then(data => {
